@@ -6,6 +6,7 @@ const ExpenseForm = (props) => {
     const [enteredTitle, setEnteredTitle] = useState('');
     const [enteredAmount, setEnteredAmount] = useState('');
     const [enteredDate, setEnteredDate] = useState('');
+    
     //This is fine however you could put it in 1 useState funciton since they all belong to the form and just changing the value
 
     // const [userInput, setUserInput] = useState({
