@@ -84,6 +84,7 @@ const NewUser = (props) => {
             // value={enteredName}
             // onChange={usernameChangeHandler}
             ref={nameInputRef}
+            // this is now uncontrolled components because it is not being kept in state. The value isn't being controlled with state or react.
           ></input>
           <label htmlFor="age">Age (Years)</label>
           <input
