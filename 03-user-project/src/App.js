@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
+import NewUser from './components/Users/NewUser'
+
 
 const App = () => {
 
   return (
-    <div> Testing
-
-    </div>
+    <NewUser />
   );
 }
 
