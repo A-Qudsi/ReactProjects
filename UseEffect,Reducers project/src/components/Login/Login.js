@@ -149,3 +149,10 @@ export default Login;
 
 //reducerFn (prevState, action) => newState. A function that is triggered automatically once an action is dispatched (via dispatchFn()) = it receives the latest state snapshot and should return the new, updated state.
 // initialState, and  initFn is a function to set the initial state programmically.
+
+
+//useState() vs useRedcuer();
+
+//useState() => the main state management "tool". Great for indepenendent pieces of state/ data. Grate if state updates are easy and limited to a few kinds of updates
+
+//useReducer => Great if you need "more power". Should be considered if you have related pieces of state/data. Can be helpful if you have more complex state updates
