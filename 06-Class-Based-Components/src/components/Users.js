@@ -3,8 +3,6 @@ import User from "./User";
 
 import classes from "./Users.module.css";
 
-
-
 // const Users = () => {
 //   const [showUsers, setShowUsers] = useState(true);
 
@@ -31,7 +29,6 @@ import classes from "./Users.module.css";
 // };
 
 class Users extends Component {
-
   constructor() {
     super();
 
@@ -42,6 +39,12 @@ class Users extends Component {
     this.toggleUsersHandler = this.toggleUsersHandler.bind(this);
   }
 
+  componentDidUpdate() {
+    if (this.props.users.length === 0) {
+      throw new Error("No users provided!");
+    }
+  }
+  
   toggleUsersHandler() {
     this.setState((curState) => {
       return { showUsers: !curState.showUsers };
@@ -49,7 +52,6 @@ class Users extends Component {
   }
 
   render() {
-
     const usersList = (
       <ul>
         {this.props.users.map((user) => (
@@ -71,10 +73,8 @@ class Users extends Component {
 
 export default Users;
 
-
 //ComponentDidMount => called once component mounted was evaluted & rendered same thing as useEffect with an empty depencies
 
 //ComponentDidUpdate => called once component updated was evaluated & rendered same thing as useEffect with some dependecies
 
-//ComponentWillUnmount => Called right before component is unmounted (removed from DOM) useEffect(() => {return () => {...}}, []) the cleanup 
-
+//ComponentWillUnmount => Called right before component is unmounted (removed from DOM) useEffect(() => {return () => {...}}, []) the cleanup
