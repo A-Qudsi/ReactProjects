@@ -3,11 +3,7 @@ import User from "./User";
 
 import classes from "./Users.module.css";
 
-const DUMMY_USERS = [
-  { id: "u1", name: "Max" },
-  { id: "u2", name: "Manuel" },
-  { id: "u3", name: "Julie" },
-];
+
 
 // const Users = () => {
 //   const [showUsers, setShowUsers] = useState(true);
@@ -38,7 +34,7 @@ class Users extends Component {
 
   constructor() {
     super();
-    
+
     this.state = {
       showUsers: true,
     };
@@ -56,7 +52,7 @@ class Users extends Component {
 
     const usersList = (
       <ul>
-        {DUMMY_USERS.map((user) => (
+        {this.props.users.map((user) => (
           <User key={user.id} name={user.name} />
         ))}
       </ul>
@@ -74,3 +70,11 @@ class Users extends Component {
 }
 
 export default Users;
+
+
+//ComponentDidMount => called once component mounted was evaluted & rendered same thing as useEffect with an empty depencies
+
+//ComponentDidUpdate => called once component updated was evaluated & rendered same thing as useEffect with some dependecies
+
+//ComponentWillUnmount => Called right before component is unmounted (removed from DOM) useEffect(() => {return () => {...}}, []) the cleanup 
+
