@@ -1,17 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const SimpleInput = (props) => {
-  const [enteredName, setEnteredName] = useState('');
+  const [enteredName, setEnteredName] = useState("");
   // const nameInputRef = useRef("");
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
-  const enteredNameIsValid = enteredName.trim() !== '';
+  // const [formIsValid, setFormIsValid] = useState(false);
+
+  const enteredNameIsValid = enteredName.trim() !== "";
   const nameInputisInvalid = !enteredNameIsValid && enteredNameTouched;
 
+  let formIsValid = false;
+  // useEffect(() => {
+  if (enteredNameIsValid) {
+    // && enteredAgeIsValid if we had)
+    formIsValid = true;
+  }
+  // }, [enteredNameIsValid]); //enteredAgeISValid]);
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
-  };;
+  };
 
   const nameInputBlurHandler = (event) => {
     setEnteredNameTouched(true);
@@ -19,7 +28,7 @@ const SimpleInput = (props) => {
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
-      
+
     setEnteredNameTouched(true);
 
     if (!enteredNameIsValid) {
@@ -37,7 +46,6 @@ const SimpleInput = (props) => {
   };
 
   //we use either or the useRef or the useState. the useState keeps track of every keystroke. To reset the field we can just call on setEnteredName and assign it an empty string. With useRef we can do on line 20 however we're manipulating the DOM.
-
 
   const nameInputClasses = !nameInputisInvalid
     ? "form-control"
@@ -60,7 +68,7 @@ const SimpleInput = (props) => {
         )}
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   );
