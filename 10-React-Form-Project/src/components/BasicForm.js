@@ -1,21 +1,34 @@
-import React, { useState } from 'react';
+import React from "react";
+import useInputs from "../hooks/use-inputs";
 
 const BasicForm = (props) => {
-  const [enteredFName, setEnteredFname] = useState('');
-  const [enteredLName, setEnteredLName] = useState('');
-  const [enteredEmail, setEnteredEmail] = useState('');
 
-  const [enteredFNameIsTouched, setEnteredFNameIsTouched] = useState(false);
-  const [enteredLNameIsTouched, setEnteredLNameIsTouched] = useState(false);
-  const [EnteredEmailIsTouched, setEnteredEmailIsTouched] = useState(false);
+  const {
+    value: enteredFName,
+    isValid: enteredFNameIsValid,
+    hasErrors: enteredFNameIsInvalid,
+    fieldChangeHandler: enteredFNameChangeHandler,
+    fieldBlurHandler: enteredFNameBlurHandler,
+    reset: fNameReset,
+  } = useInputs((value) => value.trim() !== "");
 
-  const enteredFNameIsValid = enteredFName.trim() !== '';
-  const enteredLNameIsValid = enteredLName.trim() !== '';
-  const enteredEmailIsValid = enteredEmail.includes('@'); 
+  const {
+    value: enteredLName,
+    isValid: enteredLNameIsValid,
+    hasErrors: enteredLNameIsInvalid,
+    fieldChangeHandler: enteredLNameChangeHandler,
+    fieldBlurHandler: enteredLNameBlurHandler,
+    reset: lNameReset,
+  } = useInputs((value) => value.trim() !== "");
 
-  const enteredFNameIsInvalid = !enteredFNameIsValid && enteredFNameIsTouched
-  const enteredLNameIsInvalid = !enteredLNameIsValid && enteredLNameIsTouched
-  const enteredEmailIsInvalid = !enteredEmailIsValid && EnteredEmailIsTouched
+  const {
+    value: enteredEmail,
+    isValid: enteredEmailIsValid,
+    hasErrors: enteredEmailIsInvalid,
+    fieldChangeHandler: enteredEmailChangeHandler,
+    fieldBlurHandler: enteredEmailBlurHandler,
+    reset: emailReset,
+  } = useInputs((value) => value.includes('@'));
 
   let formIsValid = false;
 
@@ -23,52 +36,27 @@ const BasicForm = (props) => {
     formIsValid = true;
   }
 
-  const enteredFNameChangeHandler = event => {
-    setEnteredFname(event.target.value);
-  }
-
-  const enteredLNameChangeHandler = event => {
-    setEnteredLName(event.target.value)
-  }
-
-  const enteredEmailChangeHandler = event => {
-    setEnteredEmail(event.target.value)
-  }
-
-  const enteredFNameBlurHandler = (event) => {
-    setEnteredFNameIsTouched(true);
-  };
-
-  const enteredLNameBlurHandler = (event) => {
-    setEnteredLNameIsTouched(true);
-  };
-
-  const enteredEmailBlurHandler = (event) => {
-    setEnteredEmailIsTouched(true);
-  };
-
-  const formSubmissionHandler = event => {
+  const formSubmissionHandler = (event) => {
     event.preventDefault();
-    setEnteredFNameIsTouched(true);
-    setEnteredLNameIsTouched(true);
-    setEnteredEmailIsTouched(true);
 
     if (!formIsValid) {
       return;
     }
 
-    setEnteredFname("");
-    setEnteredLName('');
-    setEnteredEmail('');
-    setEnteredFNameIsTouched(false);
-    setEnteredLNameIsTouched(false);
-    setEnteredEmailIsTouched(false);
-  }
+    fNameReset();
+    lNameReset();
+    emailReset();
+  };
 
-  const FNameClass = enteredFNameIsInvalid ? 'form-control invalid' : 'form-control'
-  const LNameClass = enteredLNameIsInvalid ? 'form-control invalid' : 'form-control'
-  const EmailClass = enteredEmailIsInvalid ? 'form-control invalid' : 'form-control'
-
+  const FNameClass = enteredFNameIsInvalid
+    ? "form-control invalid"
+    : "form-control";
+  const LNameClass = enteredLNameIsInvalid
+    ? "form-control invalid"
+    : "form-control";
+  const EmailClass = enteredEmailIsInvalid
+    ? "form-control invalid"
+    : "form-control";
 
   return (
     <form onSubmit={formSubmissionHandler}>
