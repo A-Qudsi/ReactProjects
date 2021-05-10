@@ -1,53 +1,43 @@
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 
 const SimpleInput = (props) => {
-  const [enteredName, setEnteredName] = useState("");
-  const nameInputRef = useRef("");
-  const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
+  const [enteredName, setEnteredName] = useState('');
+  // const nameInputRef = useRef("");
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
-  useEffect(() => {
-    if (enteredNameIsValid) {
-      console.log("Name Input is valid");
-    }
-  }, [enteredNameIsValid]);
+  const enteredNameIsValid = enteredName.trim() !== '';
+  const nameInputisInvalid = !enteredNameIsValid && enteredNameTouched;
+
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
-  };
+  };;
 
   const nameInputBlurHandler = (event) => {
     setEnteredNameTouched(true);
-
-    if (enteredName.trim() === "") {
-      setEnteredNameIsValid(false);
-      return;
-    };
-    
   };
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
-
+      
     setEnteredNameTouched(true);
 
-    if (enteredName.trim() === "") {
-      setEnteredNameIsValid(false);
+    if (!enteredNameIsValid) {
       return;
     }
 
     console.log(enteredName);
 
-    const enteredValue = nameInputRef.current.value;
-    console.log(enteredValue);
+    // const enteredValue = nameInputRef.current.value;
+    // console.log(enteredValue);
 
     setEnteredName("");
+    setEnteredNameTouched(false);
     // nameInputRef.current.value = ''; // => Not ideal. don't manipulate the DOM.
   };
 
   //we use either or the useRef or the useState. the useState keeps track of every keystroke. To reset the field we can just call on setEnteredName and assign it an empty string. With useRef we can do on line 20 however we're manipulating the DOM.
 
-  const nameInputisInvalid = !enteredNameIsValid && enteredNameTouched;
 
   const nameInputClasses = !nameInputisInvalid
     ? "form-control"
@@ -58,7 +48,7 @@ const SimpleInput = (props) => {
       <div className={nameInputClasses}>
         <label htmlFor="name">Your Name</label>
         <input
-          ref={nameInputRef}
+          // ref={nameInputRef}
           type="text"
           id="name"
           onChange={nameInputChangeHandler}
