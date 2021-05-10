@@ -37,8 +37,6 @@ const SimpleInput = (props) => {
       return;
     }
 
-    console.log(enteredName);
-
     nameReset();
     emailReset();
   };
