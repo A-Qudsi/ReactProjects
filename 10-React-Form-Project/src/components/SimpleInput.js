@@ -1,52 +1,42 @@
 import { useState, useEffect } from "react";
+import useInput from "../hooks/use-input";
 
 const SimpleInput = (props) => {
-  const [enteredName, setEnteredName] = useState("");
-  const [enteredEmail, setEnteredEmail] = useState('')
-  // const nameInputRef = useRef("");
-  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
-  const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
+  const {
+    value: enteredName,
+    isValid: enteredNameIsValid,
+    hasError: nameInputHasError,
+    valueChangeHandler: nameChangeHandler,
+    inputBlurHandler: nameBlurHandler,
+    reset: resetNameInput,
+  } = useInput((value) => value.trim() !== "");
 
-  // const [formIsValid, setFormIsValid] = useState(false);
+  const [enteredEmail, setEnteredEmail] = useState("");
+  const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
 
   const EnteredEmailIsValid =
     enteredEmail.includes("@") &&
     enteredEmail.split("@").length === 2 &&
-    enteredEmail.split("@")[1].includes('.');
+    enteredEmail.split("@")[1].includes(".");
   const emailInputIsInvalid = !EnteredEmailIsValid && enteredEmailTouched;
 
-  const enteredNameIsValid = enteredName.trim() !== "";
-  const nameInputIsValid = !enteredNameIsValid && enteredNameTouched;
-
   let formIsValid = false;
-  // useEffect(() => {
   if (enteredNameIsValid && EnteredEmailIsValid) {
-    // && enteredAgeIsValid if we had)
     formIsValid = true;
   }
-  // }, [enteredNameIsValid]); //enteredAgeISValid]);
 
-  const nameInputChangeHandler = (event) => {
-    setEnteredName(event.target.value);
-  };
-
-  const emailInputChangeHandler = event => {
+  const emailInputChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
-  }
-
-  const nameInputBlurHandler = (event) => {
-    setEnteredNameTouched(true);
   };
 
-  const emailInputBlurHandler = event => {
+  const emailInputBlurHandler = (event) => {
     setEnteredEmailTouched(true);
-  }
+  };
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
 
-    setEnteredNameTouched(true);
-    setEnteredEmailTouched(true)
+    setEnteredEmailTouched(true);
 
     if (!enteredNameIsValid || !enteredNameIsValid) {
       return;
@@ -54,20 +44,16 @@ const SimpleInput = (props) => {
 
     console.log(enteredName);
 
-    // const enteredValue = nameInputRef.current.value;
-    // console.log(enteredValue);
+    resetNameInput();
 
-    setEnteredName("");
-    setEnteredNameTouched(false);
-
-    setEnteredEmail('')
+    setEnteredEmail("");
     setEnteredEmailTouched(false);
     // nameInputRef.current.value = ''; // => Not ideal. don't manipulate the DOM.
   };
 
   //we use either or the useRef or the useState. the useState keeps track of every keystroke. To reset the field we can just call on setEnteredName and assign it an empty string. With useRef we can do on line 20 however we're manipulating the DOM.
 
-  const nameInputClasses = !nameInputIsValid
+  const nameInputClasses = !nameInputHasError
     ? "form-control"
     : "form-control invalid";
 
@@ -83,11 +69,11 @@ const SimpleInput = (props) => {
           // ref={nameInputRef}
           type="text"
           id="name"
-          onChange={nameInputChangeHandler}
-          onBlur={nameInputBlurHandler}
+          onChange={nameChangeHandler}
+          onBlur={nameBlurHandler}
           value={enteredName}
         />
-        {nameInputIsValid && (
+        {nameInputHasError && (
           <p className="error-text">Name must not be empty.</p>
         )}
       </div>
