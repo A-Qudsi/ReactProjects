@@ -1,7 +1,7 @@
 import React from "react";
 import useInputs from "../hooks/use-inputs";
 
-const BasicForm = (props) => {
+const BasicForm = () => {
 
   const {
     value: enteredFName,
